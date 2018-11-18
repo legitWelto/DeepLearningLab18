@@ -10,7 +10,7 @@ import scipy.misc
 import sys
 
 import cv2 as cv2
-import cv as cv
+#import cv as cv
 
 from PIL import Image
 from FCN import *
