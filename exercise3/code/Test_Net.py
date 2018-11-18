@@ -124,8 +124,8 @@ def main():
 				#Global_accuracy += accuracy
 				Global_accuracy += accuracy
 
-					img=imgs[test_idx, :, :, 0:3].reshape(FLAGS.img_height, FLAGS.img_width, 3)
-    				name = str('test/Img_in' + str(test_idx) + '.png')
+				img=imgs[test_idx, :, :, 0:3].reshape(FLAGS.img_height, FLAGS.img_width, 3)
+				name = str('test/Img_in' + str(test_idx) + '.png')
 
 				name = str('test/Seg_Out' + str(test_idx) + '.png')
 				name2 = str('test/GT_Out' + str(test_idx) + '.png')
