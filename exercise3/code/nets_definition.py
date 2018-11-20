@@ -89,8 +89,7 @@ def FCN_Seg(self, is_training=True):
         # upsampled_features to the same resolution as imput image
         # output feature name should match the next convolution layer, for instance
         # current_up5
-        current_up5 = slim.conv2d_transpose(x, 120, [16, 16], stride=16,  scope='up_in_1')
-        current_up5 = tf.nn.relu(current_up5)
+        current_up5 = slim.conv2d_transpose(x, 120, [16, 16], stride=16, activation_fn=tf.nn.relu6, normalizer_fn=self.normalizer, normalizer_params=self.bn_params, scope='up_in_1')
         if (shape(current_up5)[1] > shape(self.tgt_image)[1]):
             current_up5 = crop(current_up5, self.tgt_image)
 
@@ -113,8 +112,7 @@ def FCN_Seg(self, is_training=True):
         if (shape(current_up3)[1] > shape(DB4_skip_connection)[1]):
             current_up3 = crop(current_up3, DB4_skip_connection)
         current_up3 = tf.concat([current_up3, DB4_skip_connection],3)
-        current_up3 = slim.conv2d(current_up3, 256, [3, 3], scope='17')
-        current_up3 = tf.nn.relu(current_up3)
+        current_up3 = slim.conv2d(current_up3, 256, [3, 3], scope='17', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
 
         # TODO (2.2) - incorporate a upsample function which takes the features from TODO (2.1) 
         # and produces 120 output feature maps, which are 8x bigger in resolution than 
@@ -122,8 +120,7 @@ def FCN_Seg(self, is_training=True):
         # upsampled_features to the same resolution as imput image
         # output feature name should match the next convolution layer, for instance
         # current_up3
-        current_up3 = slim.conv2d_transpose(current_up3, 120, [8, 8], stride=8,  scope='up_in_2_2')
-        current_up3 = tf.nn.relu(current_up3)
+        current_up3 = slim.conv2d_transpose(current_up3, 120, [8, 8], stride=8,  scope='up_in_2_2', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
         if (shape(current_up3)[1] > shape(self.tgt_image)[1]):
             current_up3 = crop(current_up3, self.tgt_image)
 
@@ -147,8 +144,7 @@ def FCN_Seg(self, is_training=True):
         if (shape(current_up4)[1] > shape(DB4_skip_connection)[1]):
             current_up4 = crop(current_up4, DB4_skip_connection)
         current_up4 = tf.concat([current_up4, DB4_skip_connection],3)
-        current_up4 = slim.conv2d(current_up4, 256, [3, 3], scope='17')
-        current_up4 = tf.nn.relu(current_up4)
+        current_up4 = slim.conv2d(current_up4, 256, [3, 3], scope='17', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
         
         # TODO (3.2) - Repeat TODO(3.1) now producing 160 output feature maps and fusing the upsampled features 
         # with the corresponding skip connection (DB3_skip_connection) through concatenation.
@@ -156,8 +152,7 @@ def FCN_Seg(self, is_training=True):
         if (shape(current_up4)[1] > shape(DB3_skip_connection)[1]):
             current_up4 = crop(current_up4, DB3_skip_connection)
         current_up4 = tf.concat([current_up4, DB3_skip_connection],3)
-        current_up4 = slim.conv2d(current_up4, 160, [3, 3], scope='18')
-        current_up4 = tf.nn.relu(current_up4)
+        current_up4 = slim.conv2d(current_up4, 160, [3, 3], scope='18', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
         
         # TODO (3.3) - incorporate a upsample function which takes the features from TODO (3.2)  
         # and produces 120 output feature maps which are 4x bigger in resolution than 
@@ -165,8 +160,7 @@ def FCN_Seg(self, is_training=True):
         # upsampled_features to the same resolution as imput image
         # output feature name should match the next convolution layer, for instance
         # current_up4 
-        current_up4 = slim.conv2d_transpose(current_up4, 120, [4, 4], stride=4,  scope='up_in_3_3')
-        current_up4 = tf.nn.relu(current_up4)
+        current_up4 = slim.conv2d_transpose(current_up4, 120, [4, 4], stride=4,  scope='up_in_3_3', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
         if (shape(current_up4)[1] > shape(self.tgt_image)[1]):
             current_up4 = crop(current_up4, self.tgt_image) 
               
@@ -194,8 +188,7 @@ def FCN_Seg(self, is_training=True):
         if (shape(current_up4)[1] > shape(DB4_skip_connection)[1]):
             current_up4 = crop(current_up4, DB4_skip_connection)
         current_up4 = tf.concat([current_up4, DB4_skip_connection],3)
-        current_up4 = slim.conv2d(current_up4, 256, [3, 3], scope='17')
-        current_up4 = tf.nn.relu(current_up4)
+        current_up4 = slim.conv2d(current_up4, 256, [3, 3], scope='17', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
 
         # TODO (4.2) - Repeat TODO(4.1) now producing 160 output feature maps and fusing the upsampled features 
         # with the corresponding skip connection (DB3_skip_connection) through concatenation.
@@ -203,8 +196,7 @@ def FCN_Seg(self, is_training=True):
         if (shape(current_up4)[1] > shape(DB3_skip_connection)[1]):
             current_up4 = crop(current_up4, DB3_skip_connection)
         current_up4 = tf.concat([current_up4, DB3_skip_connection],3)
-        current_up4 = slim.conv2d(current_up4, 160, [3, 3], scope='18')
-        current_up4 = tf.nn.relu(current_up4)
+        current_up4 = slim.conv2d(current_up4, 160, [3, 3], scope='18', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
         
         # TODO (4.3) - Repeat TODO(4.2) now producing 96 output feature maps and fusing the upsampled features 
         # with the corresponding skip connection (DB2_skip_connection) through concatenation.
@@ -212,8 +204,7 @@ def FCN_Seg(self, is_training=True):
         if (shape(current_up4)[1] > shape(DB2_skip_connection)[1]):
             current_up4 = crop(current_up4, DB2_skip_connection)
         current_up4 = tf.concat([current_up4, DB2_skip_connection],3)
-        current_up4 = slim.conv2d(current_up4, 96, [3, 3], scope='19')
-        current_up4 = tf.nn.relu(current_up4)
+        current_up4 = slim.conv2d(current_up4, 96, [3, 3], scope='19', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
         
         # TODO (4.4) - incorporate a upsample function which takes the features from TODO(4.3) 
         # and produce 120 output feature maps which are 2x bigger in resolution than 
@@ -221,8 +212,7 @@ def FCN_Seg(self, is_training=True):
         # upsampled_features to the same resolution as imput image
         # output feature name should match the next convolution layer, for instance
         # current_up4
-        current_up4 = slim.conv2d_transpose(current_up4, 120, [2, 2], stride=2,  scope='up_in_4_4')
-        current_up4 = tf.nn.relu(current_up4)
+        current_up4 = slim.conv2d_transpose(current_up4, 120, [2, 2], stride=2,  scope='up_in_4_4', normalizer_fn=self.normalizer, normalizer_params=self.bn_params, activation_fn=tf.nn.relu6)
         if (shape(current_up4)[1] > shape(self.tgt_image)[1]):
             current_up4 = crop(current_up4, self.tgt_image) 
         
